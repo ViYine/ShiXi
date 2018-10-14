@@ -4,7 +4,7 @@
 
 ```sh
 #!/bin/sh
-echo "hello shell command"
+echo "hello shell"
 ```
 
 说明：shell脚本的第一行通常为：#!/bin/sh
