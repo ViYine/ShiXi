@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数据库容量监控平台-登录界面</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+</head>
+<body>
+
+
+
+<div class="dialog">
+    <div class="header">
+        <fieldset class=" layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>登录连接数据库参数</legend>
+        </fieldset>
+    </div>
+    <div class="content">
+        <form class="layui-form" lay-filter="loginForm" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据库地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="connAddrIP" required lay-verify="required" placeholder="请输入数据库地址" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">示例:100.80.161.74:3306</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="userPass" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formLoginDemo">登录</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+html,body {
+  height: 100%;
+}
+
+
+.dialog {
+  position: absolute;
+  left: 50%; //使用绝对定位，让dialog起点偏移到页面的中央
+  top: 50%;
+  margin-left: -350px;//通过负margin，偏移dialog宽高的一半，让dialog处于正中
+  margin-top: -200px;
+
+  width: 700px;
+  height: 400px;
+  box-shadow: 0px 0px 3px #000;
+}
+
+.dialog .header{
+  padding: 10px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+.dialog .content{
+  padding: 40px;
+}
+</style>
+
+
+
+
+<script src="../static/layui/layui.js"></script>
+<script>
+//Demo
+layui.use(['form', 'layer', 'jquery'], function(){ 
+    //操作对象
+  var form = layui.form;
+    var layer = layui.layer;
+    var $ = layui.jquery;
+    //登录初始值
+    form.val("loginForm", {
+    "connAddrIP": "100.80.161.74:3306"
+    ,"userName": "cdbData"
+    ,"userPass": "asdf1234"
+    })
+  //监听提交
+  form.on('submit(formLoginDemo)', function(data){
+
+      $.ajax({
+          url : '/login', // 请求服务器的地址
+          data: data.field,
+          dataType:'text',
+          type:'post',
+          success:function (data){
+              if (data == '1'){
+                  layer.msg("登录成功", {time: 1000});
+                  window.location.href = "/outlierConfig"; 如果成功之后需要跳转的界面
+                  return false;
+              } else {
+                  layer.msg("登录失败", {time: 2000});
+              }
+
+          }
+      })
+      return false;
+  });
+});
+</script>
+<script>
+
+</script>
+</body>
+</html>
